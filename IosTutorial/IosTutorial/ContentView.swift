@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var lastClick: Date? = nil
     @State private var buttonText: String = "Click"
     @State private var buttonPosition = CGPoint(x: 200, y: 300)
+    @State private var multiplier = 1
     @State private var gameOver: Bool = false
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -59,13 +60,15 @@ struct ContentView: View {
 
             Button {
                 if lastClick != nil, Date().timeIntervalSince(lastClick!) < 0.5 {
-                    score += 2
-                    buttonText = "Double!"
+                    multiplier += 1
+                    buttonText = "x\(multiplier)"
                 } else {
                     lastClick = Date()
-                    score += 1
+                    multiplier = 1
                     buttonText = "Click"
                 }
+                
+                score += multiplier
             } label: {
                 Text(buttonText)
                     .font(.largeTitle)
