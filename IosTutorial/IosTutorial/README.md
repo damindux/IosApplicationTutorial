@@ -1,7 +1,7 @@
 #  IOS tutorial
 
-- [ ] Home screen
-- [ ] Figure out navigation
+- [x] Home screen
+- [x] Figure out navigation
 - [ ] Make folders to organize code
 - [ ] Dynamic Layouts
 - [ ] Leaderboard Page

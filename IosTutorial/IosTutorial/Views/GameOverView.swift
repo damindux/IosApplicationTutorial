@@ -8,31 +8,25 @@
 import SwiftUI
 
 struct GameOverView: View {
-    @State private var playAgain: Bool = false
+    let score: Int
+    let highScore: Int
+    let onPlayAgain: () -> Void
     
     var body: some View {
-        if playAgain {
-            ContentView()
-        } else {
-            gameOverView
-        }
-    }
-    
-    var gameOverView: some View {
         VStack {
             Text("Game Over!")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(50)
                 
-            Text("Final Score: \(Globals.score)")
+            Text("Final Score: \(score)")
                 .font(.title2)
                 
-            Text("High Score: \(Globals.highScore)")
+            Text("High Score: \(highScore)")
                 .font(.title2)
                 
             Button {
-                playAgain = true
+                onPlayAgain()
             } label: {
                 Text("Play Again")
                     .font(.title)
@@ -50,5 +44,5 @@ struct GameOverView: View {
 }
 
 #Preview {
-    GameOverView()
+    GameOverView(score: 10, highScore: 100, onPlayAgain: {})
 }
