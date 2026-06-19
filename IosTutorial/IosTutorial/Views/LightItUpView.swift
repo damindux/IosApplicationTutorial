@@ -14,6 +14,7 @@ struct LightItUpView: View {
   @State private var timeRemaining: Int = 60
   @State private var gameOver: Bool = false
   @State private var level: Levels = .L1
+  @State private var lives: Int = 3
   
   @State private var cards: [Card] = []
   @State private var lightTask: Task<Void, Never>? = nil
@@ -103,6 +104,15 @@ struct LightItUpView: View {
         
         Spacer()
         
+        HStack {
+          ForEach(0..<3, id: \.self) { index in
+            Image(systemName: index < lives ? "heart.fill" : "heart")
+              .foregroundColor(.red)
+          }
+        }
+        
+        Spacer()
+        
         VStack {
           Text("Timer")
             .font(.title)
@@ -128,7 +138,14 @@ struct LightItUpView: View {
                 cards[index].isLit = false
               }
               else {
-                score = max(0, score - 1)
+                lives = max(0, lives - 1)
+                
+                if lives <= 0 {
+                  setHighScore()
+                  gameOver = true
+                  showGameOver = true
+                  lightTask?.cancel()
+                }
               }
               
             } label: {
@@ -195,6 +212,7 @@ struct LightItUpView: View {
     timeRemaining = 60
     gameOver = false
     level = .L1
+    lives = 3
     
     rebuildCards()
     startLightingCards()
