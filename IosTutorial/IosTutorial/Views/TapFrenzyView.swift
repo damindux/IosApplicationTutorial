@@ -26,7 +26,7 @@ struct TapFrenzyView: View {
       .fullScreenCover(isPresented: $showGameOver) {
         GameOverView(
           score: score,
-          highScore: Globals.tapFrenzyHighScore
+          highScore: GameStorage.tapFrenzyHighScore
         ) {
           resetGame()
           showGameOver = false
@@ -92,7 +92,6 @@ struct TapFrenzyView: View {
       if timeRemaining > 0 {
         timeRemaining -= 1
       } else {
-        Globals.tapFrenzyScore = score
         setHighScore()
         gameOver = true
         showGameOver = true
@@ -110,8 +109,8 @@ struct TapFrenzyView: View {
   }
   
   private func setHighScore() {
-    if score > Globals.tapFrenzyHighScore {
-      Globals.tapFrenzyHighScore = score
+    if score > GameStorage.tapFrenzyHighScore {
+      GameStorage.tapFrenzyHighScore = score
     }
   }
   

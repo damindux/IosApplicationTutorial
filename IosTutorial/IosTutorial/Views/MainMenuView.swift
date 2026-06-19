@@ -8,46 +8,50 @@
 import SwiftUI
 
 struct MainMenuView: View {
-    @State private var isShowingTapFrenzy: Bool = false
-    @State private var isShowingLightItUp: Bool = false
-    
-    var body: some View {
+  @State private var isShowingTapFrenzy: Bool = false
+  @State private var isShowingLightItUp: Bool = false
+  
+  var body: some View {
+    NavigationStack {
+      VStack(spacing: 20) {
         Text("Games")
-            .font(.largeTitle)
-            .fontWeight(.bold)
+          .font(.largeTitle)
+          .fontWeight(.bold)
         
-        NavigationStack {
-            VStack(spacing: 20) {
-                Button("Tap Frenzy") {
-                    isShowingTapFrenzy = true
-                }
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundStyle(.white)
-                .frame(width: 220, height: 80)
-                .background(.blue)
-                .clipShape(Capsule())
-                .navigationDestination(isPresented: $isShowingTapFrenzy) {
-                    TapFrenzyView()
-                }
-                
-                Button("Light It Up") {
-                    isShowingLightItUp = true
-                }
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundStyle(.white)
-                .frame(width: 220, height: 80)
-                .background(.blue)
-                .clipShape(Capsule())
-                .navigationDestination(isPresented: $isShowingLightItUp) {
-                    LightItUpView()
-                }
-            }
+        Spacer()
+        
+        Button("Tap Frenzy") {
+          isShowingTapFrenzy = true
         }
+        .font(.title)
+        .fontWeight(.bold)
+        .foregroundStyle(.white)
+        .frame(width: 220, height: 80)
+        .background(.blue)
+        .clipShape(Capsule())
+        .navigationDestination(isPresented: $isShowingTapFrenzy) {
+          TapFrenzyView()
+        }
+        
+        Button("Light It Up") {
+          isShowingLightItUp = true
+        }
+        .font(.title)
+        .fontWeight(.bold)
+        .foregroundStyle(.white)
+        .frame(width: 220, height: 80)
+        .background(.blue)
+        .clipShape(Capsule())
+        .navigationDestination(isPresented: $isShowingLightItUp) {
+          LightItUpView()
+        }
+        
+        Spacer()
+      }
     }
+  }
 }
 
 #Preview {
-    MainMenuView()
+  MainMenuView()
 }

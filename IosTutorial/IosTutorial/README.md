@@ -2,8 +2,8 @@
 
 - [x] Home screen
 - [x] Figure out navigation
-- [ ] Make folders to organize code
-- [ ] Dynamic Layouts
+- [x] Make folders to organize code
+- [x] Dynamic Layouts
 - [ ] Leaderboard Page
 - [ ] Add Images
 - [ ] Add Sounds
