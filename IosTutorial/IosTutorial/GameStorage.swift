@@ -12,4 +12,5 @@ import SwiftUI
 final class GameStorage {
   @AppStorage("tapFrenzyHighScore") static var tapFrenzyHighScore: Int = 0
   @AppStorage("lighItUpHighScore") static var lightItUpHighScore: Int = 0
+  @AppStorage("quizRushHighScore") static var quizRushHighScore: Int = 0
 }

@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct QuizView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+  @StateObject var viewModel: QuizViewModel
+  
+  @State private var currentIndex = 0
+  @State private var score = 0
+  @State private var selectedAnswer: String?
+  @State private var showFeedback = false
+  @State private var isCorrect = false
+  @State private var showGameOver = false
+  
+  var body: some View {
+    
+  }
+  
 }
 
 #Preview {
-    QuizView()
+  QuizView(viewModel: QuizViewModel(service: QuizService()))
 }
