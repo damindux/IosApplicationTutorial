@@ -51,7 +51,7 @@ struct LightItUpView: View {
     var columnCount: Int {
       switch self {
       case .L1: return 3
-      case .L2: return 2
+      case .L2: return 4
       case .L3: return 3
       case .L4: return 3
       }
