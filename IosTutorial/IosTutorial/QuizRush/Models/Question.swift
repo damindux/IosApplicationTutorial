@@ -15,6 +15,10 @@ struct Question: Decodable {
   let correctAnswer: String
   let incorrectAnswers: [String]
   
+  var answers: [String] {
+    return ([correctAnswer] + incorrectAnswers).shuffled()
+  }
+  
   enum CodingKeys: String, CodingKey {
     case type
     case difficulty
