@@ -71,17 +71,13 @@ struct QuizView: View {
             .font(.title2)
             .multilineTextAlignment(.center)
           
-          ForEach(viewModel.questions[viewModel.index].answers, id: \.self) { answer in
-            Button {
+          ForEach(viewModel.shuffledAnswers, id: \.self) { answer in
+            AnswerButton(
+              title: answer.description.htmlDecoded,
+              isSelected: viewModel.selectedAnswer == answer,
+              isCorrect: viewModel.selectedAnswer == answer ? viewModel.isCorrectAnswer : nil
+            ) {
               viewModel.checkAnswer(answer)
-            } label: {
-              Text(answer.description.htmlDecoded)
-                .font(.title3)
-                .fontWeight(.bold)
-                .foregroundStyle(.white)
-                .frame(width: 300, height: 80)
-                .background(.primary)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
             }
           }
           
@@ -90,6 +86,7 @@ struct QuizView: View {
           Text("Questions: \(viewModel.index + 1)/\(viewModel.questions.count)")
             .foregroundColor(.gray)
         }
+        .animation(nil, value: viewModel.index)
         .padding(20)
       }
     }

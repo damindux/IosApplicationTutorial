@@ -9,10 +9,9 @@ import SwiftUI
 
 @main
 struct IosTutorialApp: App {
-    var body: some Scene {
-        WindowGroup {
-            MainMenuView()
-            .preferredColorScheme(.dark)
-        }
+  var body: some Scene {
+    WindowGroup {
+      MainMenuView()
     }
+  }
 }

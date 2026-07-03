@@ -12,19 +12,6 @@ enum ViewState: Equatable {
   case loading
   case loaded
   case failed(String)
-  
-  static func == (lhs: ViewState, rhs: ViewState) -> Bool {
-    switch (lhs, rhs) {
-    case (.loading, .loading),
-      (.loaded, .loaded):
-      return true
-    case (.failed, .failed):
-      // Consider all failed states equal regardless of the associated message
-      return true
-    default:
-      return false
-    }
-  }
 }
 
 @MainActor
@@ -35,6 +22,11 @@ final class QuizViewModel: ObservableObject {
   @Published var streak = 0
   @Published var viewState: ViewState = .loading
   @Published var isGameOverPresented = false
+  
+  @Published var shuffledAnswers: [String] = []
+  
+  @Published var selectedAnswer: String? = nil
+  @Published var isCorrectAnswer: Bool? = nil
   
   var highScore: Int {
     GameStorage.quizRushHighScore
@@ -55,6 +47,9 @@ final class QuizViewModel: ObservableObject {
     do {
       let quiz = try await quizService.fetchQuestions()
       questions = quiz.results
+      
+      shuffledAnswers = questions.first?.answers.shuffled() ?? []
+      
       viewState = .loaded
     } catch {
       viewState = .failed(error.localizedDescription)
@@ -65,8 +60,12 @@ final class QuizViewModel: ObservableObject {
     guard index < questions.count else { return }
     
     let currentQuestion = questions[index]
+    selectedAnswer = answer
     
-    if answer == currentQuestion.correctAnswer {
+    let correct = answer == currentQuestion.correctAnswer
+    isCorrectAnswer = correct
+    
+    if correct {
       score += 10 + (streak * 2)
       streak += 1
     } else {
@@ -74,11 +73,26 @@ final class QuizViewModel: ObservableObject {
       streak = 0
     }
     
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+      Task { @MainActor in
+        self.moveToNext()
+      }
+    }
+  }
+  
+  private func loadAnswers() {
+    shuffledAnswers = questions[index].answers.shuffled()
+  }
+  
+  private func moveToNext() {
+    selectedAnswer = nil
+    isCorrectAnswer = nil
+    
     if index == questions.count - 1 {
       finishedGame()
-    }
-    else {
+    } else {
       index += 1
+      loadAnswers()
     }
   }
   

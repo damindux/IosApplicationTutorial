@@ -11,6 +11,7 @@ struct MainMenuView: View {
   @State private var isShowingTapFrenzy: Bool = false
   @State private var isShowingLightItUp: Bool = false
   @State private var isShowingQuizRush: Bool = false
+  @State private var isShowingHighScores: Bool = false
 
   var body: some View {
     NavigationStack {
@@ -61,6 +62,25 @@ struct MainMenuView: View {
         }
 
         Spacer()
+        
+        HStack {
+          Spacer()
+          
+          Button {
+            isShowingHighScores = true
+          } label: {
+            Image(systemName: "trophy.fill")
+              .font(.system(size: 40))
+              .frame(width: 100, height: 80)
+              .foregroundStyle(.yellow)
+              .background(.ultraThinMaterial)
+              .clipShape(Circle())
+              .navigationDestination(isPresented: $isShowingHighScores) {
+                HighScoreView()
+              }
+          }
+        }
+        .padding(20)
       }
     }
   }

@@ -16,7 +16,7 @@ struct Question: Decodable {
   let incorrectAnswers: [String]
   
   var answers: [String] {
-    return ([correctAnswer] + incorrectAnswers).shuffled()
+    [correctAnswer] + incorrectAnswers
   }
   
   enum CodingKeys: String, CodingKey {
