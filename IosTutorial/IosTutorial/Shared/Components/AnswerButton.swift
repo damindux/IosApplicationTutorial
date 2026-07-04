@@ -10,7 +10,8 @@ import SwiftUI
 struct AnswerButton: View {
   let title: String
   let isSelected: Bool
-  let isCorrect: Bool?
+  let isCorrectAnswer: Bool
+  let hasAnswered: Bool
   let action: () -> Void
   
   @State private var flash = false
@@ -19,7 +20,7 @@ struct AnswerButton: View {
     Button(action: {
       action()
       
-      if isCorrect == true {
+      if isCorrectAnswer {
         withAnimation(.easeOut(duration: 0.2)) {
           flash = true
         }
@@ -36,17 +37,21 @@ struct AnswerButton: View {
         .frame(width: 300, height: 50)
         .background(backgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 15))
-        .scaleEffect(isCorrect == true && flash ? 1.05 : 1.0)
+        .scaleEffect(isCorrectAnswer && flash ? 1.05 : 1.0)
     }
   }
   
   private var backgroundColor: Color {
+    guard hasAnswered else {
+      return .primary
+    }
+    
+    if isCorrectAnswer {
+      return .green
+    }
+    
     if isSelected {
-      if isCorrect == true {
-        return .green
-      } else if isCorrect == false {
-        return .red
-      }
+      return .red
     }
     
     return .primary

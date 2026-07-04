@@ -75,7 +75,8 @@ struct QuizView: View {
             AnswerButton(
               title: answer.description.htmlDecoded,
               isSelected: viewModel.selectedAnswer == answer,
-              isCorrect: viewModel.selectedAnswer == answer ? viewModel.isCorrectAnswer : nil
+              isCorrectAnswer: answer == viewModel.questions[viewModel.index].correctAnswer,
+              hasAnswered: viewModel.selectedAnswer != nil
             ) {
               viewModel.checkAnswer(answer)
             }

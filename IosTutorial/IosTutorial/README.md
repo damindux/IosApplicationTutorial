@@ -1,9 +1,16 @@
 #  IOS tutorial
 
-- [x] Home screen
-- [x] Figure out navigation
-- [x] Make folders to organize code
-- [x] Dynamic Layouts
-- [ ] Leaderboard Page
-- [ ] Add Images
-- [ ] Add Sounds
+## Common
+
+- [ ] UI overhaul
+- [ ] Add starting pages for every game
+
+## Light It Up
+
+- [ ] Change how the difficulty curve works using a suitable algorithm 
+- [ ] Settings for difficulties
+- [ ] Procedurally generate the card stack
+
+## Quiz Rush
+
+- [ ] Add a page to change difficulties and categories
