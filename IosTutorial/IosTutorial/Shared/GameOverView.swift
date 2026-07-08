@@ -15,15 +15,18 @@ struct GameOverView: View {
     var body: some View {
         VStack {
             Text("Game Over!")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(50)
+              .font(Font.custom("Pixelify Sans", size: 40))
+              .foregroundStyle(.text)
+              .fontWeight(.bold)
+              .padding(50)
                 
             Text("Final Score: \(score)")
-                .font(.title2)
+              .font(Font.custom("Pixelify Sans", size: 28))
+              .foregroundStyle(.text)
                 
             Text("High Score: \(highScore)")
-                .font(.title2)
+              .font(Font.custom("Pixelify Sans", size: 28))
+              .foregroundStyle(.text)
                 
             Button {
                 onPlayAgain()
@@ -39,7 +42,7 @@ struct GameOverView: View {
             .shadow(radius: 20)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Gradient(colors: [.white, .white, .cyan]))
+        .background(.bg)
     }
 }
 

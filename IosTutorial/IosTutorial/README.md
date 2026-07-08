@@ -4,6 +4,12 @@
 
 - [ ] UI overhaul
 - [ ] Add starting pages for every game
+- [ ] Daily challenge
+- [ ] Notifications
+- [ ] Daily reminder
+- [ ] Stats page
+- [ ] Settings page
+- [ ] Break previous games in to more files
 
 ## Light It Up
 
@@ -14,3 +20,6 @@
 ## Quiz Rush
 
 - [ ] Add a page to change difficulties and categories
+
+
+Deep Maze Palette

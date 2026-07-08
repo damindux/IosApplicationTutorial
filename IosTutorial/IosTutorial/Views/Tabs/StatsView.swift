@@ -1,13 +1,13 @@
 //
-//  HighScoreView.swift
+//  StatsView.swift
 //  IosTutorial
 //
-//  Created by Student3 on 2026-07-03.
+//  Created by Student3 on 2026-07-08.
 //
 
 import SwiftUI
 
-struct HighScoreView: View {
+struct StatsView: View {
   var body: some View {
     ZStack {
       Color(.systemBackground)
@@ -34,5 +34,5 @@ struct HighScoreView: View {
 }
 
 #Preview {
-    HighScoreView()
+    StatsView()
 }

@@ -37,27 +37,30 @@ struct TapFrenzyView: View {
   var gameView: some View {
     VStack(spacing: 30) {
       Text("Tap Frenzy")
-        .font(.largeTitle)
+        .font(Font.custom("Pixelify Sans", size: 38))
+        .foregroundStyle(.text)
         .fontWeight(.bold)
       
       HStack {
         VStack {
           Text("Score")
-            .font(.title)
-            .fontWeight(.bold)
+            .font(Font.custom("Pixelify Sans", size: 28))
+            .foregroundStyle(.text2)
           Text("\(score)")
-            .font(.title)
+            .font(Font.custom("Pixelify Sans", size: 38))
+            .foregroundStyle(.text)
         }
         
         Spacer()
         
         VStack {
           Text("Timer")
-            .font(.title)
-            .fontWeight(.bold)
+            .font(Font.custom("Pixelify Sans", size: 28))
+            .foregroundStyle(.text2)
           
           Text("\(timeRemaining)")
-            .font(.title)
+            .font(Font.custom("Pixelify Sans", size: 38))
+            .foregroundStyle(.text)
             .monospacedDigit()
         }
       }.padding(20)
@@ -77,14 +80,15 @@ struct TapFrenzyView: View {
         score += multiplier
       } label: {
         Text(buttonText)
-          .font(.largeTitle)
-          .foregroundColor(.white)
-          .padding(80)
-          .background(.green)
-          .clipShape(Circle())
+          .font(Font.custom("Pixelify Sans", size: 38))
+          .foregroundStyle(.text)
+          .frame(width: 200, height: 200)
+          .background {
+            Rectangle()
+              .fill(.green)
+          }
       }
       .position(buttonPosition)
-      .shadow(radius: 20)
       
       Spacer()
     }
@@ -105,7 +109,8 @@ struct TapFrenzyView: View {
         )
       }
     }
-    .background(Gradient(colors: [.white, .white, .cyan]))
+    .background(.bg)
+    .toolbar(.hidden, for: .tabBar)
   }
   
   private func setHighScore() {
