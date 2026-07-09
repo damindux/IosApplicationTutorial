@@ -39,6 +39,26 @@ final class LocationService: NSObject {
       break
     }
   }
+  
+  func requestPermission() {
+    switch manager.authorizationStatus {
+    case .notDetermined:
+      manager.requestWhenInUseAuthorization()
+      
+    case .authorizedWhenInUse, .authorizedAlways:
+      requestLocation()
+      
+    case .restricted, .denied:
+      break
+      
+    @unknown default:
+      break
+    }
+  }
+  
+  func isAuthorized() -> Bool {
+    authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse
+  }
 }
 
 extension LocationService: CLLocationManagerDelegate {

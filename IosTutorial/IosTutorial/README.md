@@ -4,6 +4,7 @@
 
 - [ ] UI overhaul
 - [ ] Add starting pages for every game
+- [ ] Location storage
 - [ ] Daily challenge
 - [ ] Notifications
 - [ ] Daily reminder

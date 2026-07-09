@@ -38,6 +38,9 @@ struct IosTutorialApp: App {
           }
           .tag(3)
       }
+      .onAppear {
+        LocationService.shared.requestPermission()
+      }
     }
   }
 }

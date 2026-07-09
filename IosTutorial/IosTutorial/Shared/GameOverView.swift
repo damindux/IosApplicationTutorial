@@ -12,38 +12,49 @@ struct GameOverView: View {
     let highScore: Int
     let onPlayAgain: () -> Void
     
-    var body: some View {
-        VStack {
-            Text("Game Over!")
-              .font(Font.custom("Pixelify Sans", size: 40))
-              .foregroundStyle(.text)
-              .fontWeight(.bold)
-              .padding(50)
-                
-            Text("Final Score: \(score)")
-              .font(Font.custom("Pixelify Sans", size: 28))
-              .foregroundStyle(.text)
-                
-            Text("High Score: \(highScore)")
-              .font(Font.custom("Pixelify Sans", size: 28))
-              .foregroundStyle(.text)
-                
-            Button {
-                onPlayAgain()
-            } label: {
-                Text("Play Again")
-                    .font(.title)
-                    .foregroundStyle(.white)
-                    .padding(20)
-                    .background(.green)
-                    .clipShape(Capsule())
-            }
-            .padding(50)
-            .shadow(radius: 20)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.bg)
+  var body: some View {
+    VStack {
+      titleSection
+      scoreSection
+      button
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(.bg)
+  }
+  
+  private var titleSection: some View {
+    Text("Game Over!")
+      .font(Font.custom("Pixelify Sans", size: 40))
+      .foregroundStyle(.text)
+      .fontWeight(.bold)
+      .padding(50)
+  }
+  
+  private var scoreSection: some View {
+    VStack(spacing: 8) {
+      Text("Final Score: \(score)")
+        .font(Font.custom("Pixelify Sans", size: 28))
+        .foregroundStyle(.text)
+      
+      Text("High Score: \(highScore)")
+        .font(Font.custom("Pixelify Sans", size: 28))
+        .foregroundStyle(.text)
+    }
+  }
+  
+  private var button: some View {
+    Button {
+      onPlayAgain()
+    } label: {
+      Text("Play Again")
+        .font(Font.custom("Pixelify Sans", size: 24))
+        .foregroundStyle(.text)
+        .padding(20)
+        .background(.green)
+        .clipShape(Rectangle())
+    }
+    .padding(50)
+  }
 }
 
 #Preview {

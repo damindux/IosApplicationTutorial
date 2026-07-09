@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum GameMode: Codable {
-  case TapFrenzy
-  case LightItUp
-  case QuizRush
+enum GameMode: String, Codable {
+  case TapFrenzy = "Tap Frenzy"
+  case LightItUp = "Light It Up"
+  case QuizRush = "Quiz Rush"
 }
 
-struct GameSession: Identifiable, Codable {
+struct GameSession: Identifiable, Codable, Hashable {
   let id: UUID
   let mode: GameMode
   let score: Int
