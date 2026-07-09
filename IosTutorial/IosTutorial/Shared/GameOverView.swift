@@ -64,7 +64,7 @@ struct GameOverView: View {
     ) {
       Label("Share", systemImage: "square.and.arrow.up")
         .font(Font.custom("Pixelify Sans", size: 24))
-        .foregroundStyle(.text2)
+        .foregroundStyle(.title)
         .clipShape(Rectangle())
     }
   }

@@ -89,7 +89,7 @@ class SettingsVM {
     }
   }
   
-  func updateRemainderTime(_ date: Date)
+  func updateReminderTime(_ date: Date)
   {
     dailyReminderTime = date
     saveSettings()

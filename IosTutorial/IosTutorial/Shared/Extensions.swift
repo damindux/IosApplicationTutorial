@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension String {
   var htmlDecoded: String {
@@ -15,5 +16,11 @@ extension String {
       .replacingOccurrences(of: "&amp;", with: "&")
       .replacingOccurrences(of: "&lt;", with: "<")
       .replacingOccurrences(of: "&gt;", with: ">")
+  }
+}
+
+extension Button {
+  func pixelButtonStyle(color: Color) -> some View {
+    self.buttonStyle(PixelButtonStyle(color: color))
   }
 }

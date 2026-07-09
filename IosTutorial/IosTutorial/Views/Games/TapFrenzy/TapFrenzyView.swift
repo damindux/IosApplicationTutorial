@@ -67,7 +67,7 @@ struct TapFrenzyView: View {
     VStack {
       Text(title)
         .font(Font.custom("Pixelify Sans", size: 28))
-        .foregroundStyle(.text2)
+        .foregroundStyle(.title)
       Text("\(value)")
         .font(Font.custom("Pixelify Sans", size: 38))
         .foregroundStyle(.text)
