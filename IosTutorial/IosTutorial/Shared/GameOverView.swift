@@ -52,7 +52,7 @@ struct GameOverView: View {
         .font(Font.custom("Pixelify Sans", size: 24))
         .foregroundStyle(.text)
         .padding(20)
-        .background(.green)
+        .background(.on)
         .clipShape(Rectangle())
     }
     .padding(50)

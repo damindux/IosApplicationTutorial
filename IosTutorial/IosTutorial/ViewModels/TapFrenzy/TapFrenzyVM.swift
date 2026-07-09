@@ -10,6 +10,8 @@ import Combine
 
 @Observable
 class TapFrenzyVM {
+  private let sessionService: GameSessionService
+  
   var score = 0
   var timeRemaining = 10
   var buttonText = "Click"
@@ -21,23 +23,34 @@ class TapFrenzyVM {
   let gameMode = GameMode.TapFrenzy
   
   private var lastClick: Date?
-  
+  private var timerCancellable: AnyCancellable?
+  private var moveTimerCancellable: AnyCancellable?
+
   var highScore: Int {
       GameStorage.tapFrenzyHighScore
   }
   
-  private var timerCancellable: AnyCancellable?
-  private var moveTimerCancellable: AnyCancellable?
-  
-  var isActive: Bool {
-    timeRemaining > 0 && !gameOver
+  init(sessionService: GameSessionService = .shared)
+  {
+    self.sessionService = sessionService
   }
   
-  init() { startTimers() }
   deinit { stopTimers() }
   
-  func handleTap() {
-    guard isActive else { return }
+  func startGame()
+  {
+    guard timeRemaining == 10 && score == 0 && !gameOver else { return }
+    startTimers()
+  }
+  
+  func stopGame()
+  {
+    stopTimers()
+  }
+  
+  func handleTap()
+  {
+    guard !gameOver else { return }
     
     if let last = lastClick, Date().timeIntervalSince(last) < 0.5 {
       multiplier += 1
@@ -53,6 +66,7 @@ class TapFrenzyVM {
   
   func resetGame()
   {
+    stopTimers()
     score = 0
     timeRemaining = 10
     multiplier = 1
@@ -61,7 +75,6 @@ class TapFrenzyVM {
     gameOver = false
     buttonPosition = CGPoint(x: 200, y: 300)
     showGameOver = false
-    startTimers()
   }
   
   private func startTimers()
@@ -83,21 +96,23 @@ class TapFrenzyVM {
   {
     timerCancellable?.cancel()
     moveTimerCancellable?.cancel()
+    timerCancellable = nil
+    moveTimerCancellable = nil
   }
   
   private func tick()
   {
-    guard isActive else { return }
+    guard timeRemaining > 0 else {
+      endGame()
+      return
+    }
     
     timeRemaining -= 1
-    if timeRemaining <= 0 {
-      endGame()
-    }
   }
   
   private func moveButton()
   {
-    guard isActive else { return }
+    guard !gameOver else { return }
     
     withAnimation(.spring()) {
       buttonPosition = CGPoint(
@@ -112,6 +127,7 @@ class TapFrenzyVM {
     gameOver = true
     stopTimers()
     setHighScore()
+    saveSession()
     showGameOver = true
   }
   
@@ -120,5 +136,18 @@ class TapFrenzyVM {
     if score > GameStorage.tapFrenzyHighScore {
       GameStorage.tapFrenzyHighScore = score
     }
+  }
+  
+  private func saveSession()
+  {
+    let session = GameSession(
+      id: UUID(),
+      mode: gameMode,
+      score: score,
+      timestamp: Date(),
+      latitude: 0,
+      longitude: 0
+    )
+    sessionService.add(session)
   }
 }

@@ -24,3 +24,14 @@ extension Button {
     self.buttonStyle(PixelButtonStyle(color: color))
   }
 }
+
+private struct TabBarHiddenKey: EnvironmentKey {
+    static let defaultValue: Binding<Bool> = .constant(false)
+}
+
+extension EnvironmentValues {
+    var tabBarHidden: Binding<Bool> {
+        get { self[TabBarHiddenKey.self] }
+        set { self[TabBarHiddenKey.self] = newValue }
+    }
+}

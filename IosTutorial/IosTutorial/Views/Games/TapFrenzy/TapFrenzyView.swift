@@ -10,9 +10,19 @@ import Combine
 
 struct TapFrenzyView: View {
   @State private var viewModel = TapFrenzyVM()
+  @Environment(\.tabBarHidden) private var tabBarHidden
   
   var body: some View {
     gameView
+      .ignoresSafeArea(.container, edges: .bottom)
+      .onAppear {
+        tabBarHidden.wrappedValue = true
+        viewModel.startGame()
+      }
+      .onDisappear {
+        tabBarHidden.wrappedValue = false
+        viewModel.stopGame()
+      }
       .fullScreenCover(isPresented: $viewModel.showGameOver) {
         GameOverView(
           score: viewModel.score,
@@ -58,7 +68,7 @@ struct TapFrenzyView: View {
         .font(Font.custom("Pixelify Sans", size: 38))
         .foregroundStyle(.text)
         .frame(width: 200, height: 200)
-        .background(Rectangle().fill(.green))
+        .background(Rectangle().fill(.on))
     }
     .position(viewModel.buttonPosition)
   }
