@@ -10,13 +10,13 @@ import UserNotifications
 
 @Observable
 class SettingsVM {
+  private let notificationService: NotificationServiceProtocol
+  private let defaults = UserDefaults.standard
+  
   var dailyReminderEnabled = false
   var dailyReminderTime = Date()
   var dailyChallengeEnabled = false
-  
-  private let notificationCenter = UNUserNotificationCenter.current()
-  private let reminderIndentifier = "dailyReminder"
-  private let defaults = UserDefaults.standard
+  var notificationPermissionStatus: UNAuthorizationStatus = .notDetermined
   
   private enum Keys {
     static let dailyReminderEnabled = "dailyReminderEnabled"
@@ -24,18 +24,17 @@ class SettingsVM {
     static let dailyChallengeEnabled = "dailyChallengeEnabled"
   }
   
-  init()
+  init(notificationService: NotificationServiceProtocol = NotificationService.shared)
   {
+    self.notificationService = notificationService
     loadSettings()
-    requestNotificationPermission()
+    checkPermissionStatus()
   }
   
-  private func requestNotificationPermission()
+  private func checkPermissionStatus()
   {
-    notificationCenter.requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
-      if !granted {
-        // TODO: forward to settings for notification permission
-      }
+    Task {
+      notificationPermissionStatus = await notificationService.checkAuthorizationStatus()
     }
   }
   
@@ -58,14 +57,35 @@ class SettingsVM {
   
   func toggleDailyReminder(isOn: Bool)
   {
-    dailyReminderEnabled = isOn
-    saveSettings()
-    
-    if isOn {
-      scheduleDailyReminder()
+    guard isOn else {
+      dailyReminderEnabled = false
+      notificationService.cancelDailyReminder()
+      saveSettings()
+      return
     }
-    else {
-      cancelDailyReminder()
+    
+    Task {
+      do {
+        let granted = try await notificationService.requestAuthorization()
+        
+        await MainActor.run {
+          if granted {
+            dailyReminderEnabled = true
+            scheduleReminder()
+          }
+          else {
+            dailyReminderEnabled = false
+          }
+          
+          saveSettings()
+        }
+      }
+      catch {
+        await MainActor.run {
+          dailyReminderEnabled = false
+          saveSettings()
+        }
+      }
     }
   }
   
@@ -75,35 +95,20 @@ class SettingsVM {
     saveSettings()
     
     if dailyReminderEnabled {
-      scheduleDailyReminder()
+      scheduleReminder()
     }
   }
   
-  private func scheduleDailyReminder()
+  private func scheduleReminder()
   {
-    cancelDailyReminder()
-    
-    let content = UNMutableNotificationContent()
-    content.title = "Daily Reminder"
-    content.body = "Don't forget to log your progress!"
-    content.sound = .default
-    
-    let calendar = Calendar.current
-    let components = calendar.dateComponents([.hour, .minute], from: dailyReminderTime)
-    
-    let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
-    let request = UNNotificationRequest(identifier: reminderIndentifier, content: content, trigger: trigger)
-    
-    notificationCenter.add(request) { error in
-      if let error = error {
-        // TODO: Handle error
+    Task {
+      do {
+        try await notificationService.scheduleDailyReminder(at: dailyReminderTime)
+      }
+      catch {
+        print("Failed to schedule timer: \(error)")
       }
     }
-  }
-  
-  private func cancelDailyReminder()
-  {
-    notificationCenter.removePendingNotificationRequests(withIdentifiers: [reminderIndentifier])
   }
   
   func toggleDailyChallenge(isOn: Bool)
@@ -117,7 +122,8 @@ class SettingsVM {
     GameStorage.resetAll()
     dailyReminderEnabled = false
     dailyChallengeEnabled = false
-    cancelDailyReminder()
+    
+    notificationService.cancelDailyReminder()
     saveSettings()
   }
 }

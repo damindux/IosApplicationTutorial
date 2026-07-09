@@ -6,8 +6,8 @@
 - [ ] Add starting pages for every game
 - [ ] Location storage
 - [ ] Daily challenge
-- [ ] Abstract away notifications to a service
-- [ ] Daily reminder
+- [x] Abstract away notifications to a service
+- [x] Daily reminder
 - [ ] Stats page
 - [x] Settings page
 - [x] Share option
