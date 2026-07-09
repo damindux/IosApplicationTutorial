@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct GameOverView: View {
-    let score: Int
-    let highScore: Int
-    let onPlayAgain: () -> Void
-    
+  let score: Int
+  let highScore: Int
+  let gameMode: GameMode
+  let onPlayAgain: () -> Void
+  
   var body: some View {
     VStack {
       titleSection
       scoreSection
       button
+      shareLink
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(.bg)
@@ -55,8 +57,19 @@ struct GameOverView: View {
     }
     .padding(50)
   }
+  
+  private var shareLink: some View {
+    ShareLink(
+      item: "I scored \(score) points in \(gameMode.rawValue) on PlayHub! Can you beat my score? 😊"
+    ) {
+      Label("Share", systemImage: "square.and.arrow.up")
+        .font(Font.custom("Pixelify Sans", size: 24))
+        .foregroundStyle(.text2)
+        .clipShape(Rectangle())
+    }
+  }
 }
 
 #Preview {
-    GameOverView(score: 10, highScore: 100, onPlayAgain: {})
+  GameOverView(score: 10, highScore: 100, gameMode: .TapFrenzy, onPlayAgain: {})
 }

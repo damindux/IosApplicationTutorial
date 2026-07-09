@@ -79,6 +79,7 @@ struct LightItUpView: View {
         GameOverView(
           score: score,
           highScore: GameStorage.lightItUpHighScore,
+          gameMode: .LightItUp
         ) {
           resetGame()
           showGameOver = false

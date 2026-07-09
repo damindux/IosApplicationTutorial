@@ -16,7 +16,8 @@ struct TapFrenzyView: View {
       .fullScreenCover(isPresented: $viewModel.showGameOver) {
         GameOverView(
           score: viewModel.score,
-          highScore: viewModel.highScore
+          highScore: viewModel.highScore,
+          gameMode: viewModel.gameMode
         ) {
           viewModel.resetGame()
         }

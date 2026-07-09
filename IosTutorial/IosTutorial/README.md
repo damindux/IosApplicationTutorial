@@ -6,11 +6,13 @@
 - [ ] Add starting pages for every game
 - [ ] Location storage
 - [ ] Daily challenge
-- [ ] Notifications
+- [ ] Abstract away notifications to a service
 - [ ] Daily reminder
 - [ ] Stats page
-- [ ] Settings page
+- [x] Settings page
+- [x] Share option
 - [ ] Break previous games in to more files
+- [ ] Handle all TODO comments
 
 ## Light It Up
 

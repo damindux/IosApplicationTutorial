@@ -18,6 +18,8 @@ class TapFrenzyVM {
   var gameOver = false
   var showGameOver = false
   
+  let gameMode = GameMode.TapFrenzy
+  
   private var lastClick: Date?
   
   var highScore: Int {

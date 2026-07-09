@@ -95,6 +95,7 @@ struct QuizView: View {
       GameOverView(
         score: viewModel.score,
         highScore: viewModel.highScore,
+        gameMode: .QuizRush,
         onPlayAgain: {
           Task {
             viewModel.isGameOverPresented = false
