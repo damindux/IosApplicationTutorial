@@ -9,35 +9,31 @@ import SwiftUI
 
 @main
 struct IosTutorialApp: App {
-  @State private var selectedTab: Int = 0
+  @State private var selectedTab: TabItem = .home
   
   var body: some Scene {
     WindowGroup {
-      TabView(selection: $selectedTab) {
-        MainMenuView()
-          .tabItem {
-            Label("Home", image: "Home")
+      ZStack {
+        Group {
+          switch selectedTab {
+          case .home:
+            MainMenuView()
+          case .stats:
+            StatsView()
+          case .map:
+            MapView()
+          case .settings:
+            SettingsView()
           }
-          .tag(0)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         
-        StatsView()
-          .tabItem {
-            Label("Stats", systemImage: "chart.bar")
-          }
-          .tag(1)
-        
-        MapView()
-          .tabItem {
-            Label("Map", systemImage: "map")
-          }
-          .tag(2)
-        
-        SettingsView()
-          .tabItem {
-            Label("Settings", systemImage: "gear")
-          }
-          .tag(3)
+        VStack {
+          Spacer()
+          CustomTabBar(selectedTab: $selectedTab)
+        }
       }
+      .ignoresSafeArea()
       .onAppear {
         LocationService.shared.requestPermission()
       }
