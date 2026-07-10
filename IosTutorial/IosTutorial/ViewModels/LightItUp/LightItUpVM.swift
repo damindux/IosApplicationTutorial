@@ -10,12 +10,16 @@ import Combine
 
 @Observable
 final class LightItUpVM {
+  private let sessionService: GameSessionService
+  
   var score = 0
   var timeRemaining = 60
   var level = Level.L1
   var lives = 3
   var cards: [Card] = []
   var showGameOver = false
+  
+  let gameMode = GameMode.LightItUp
   
   var isGameOver: Bool {
     lives <= 0 || timeRemaining <= 0
@@ -25,13 +29,17 @@ final class LightItUpVM {
   private var timerCancellable: AnyCancellable?
   private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
   
-  init() { setupTimer() }
+  init(sessionService: GameSessionService = .shared)
+  {
+    self.sessionService = sessionService
+  }
   
   deinit { stopGame() }
   
   func startGame()
   {
     resetGame()
+    setupTimer()
   }
   
   func stopGame()
@@ -103,6 +111,7 @@ final class LightItUpVM {
   private func endGame()
   {
     setHighScore()
+    saveSession()
     showGameOver = true
     lightTask?.cancel()
   }
@@ -143,6 +152,19 @@ final class LightItUpVM {
         try? await Task.sleep(for: .seconds(litTime))
       }
     }
+  }
+  
+  private func saveSession()
+  {
+    let session = GameSession(
+      id: UUID(),
+      mode: gameMode,
+      score: score,
+      timestamp: Date(),
+      latitude: 0,
+      longitude: 0
+    )
+    sessionService.add(session)
   }
 }
 

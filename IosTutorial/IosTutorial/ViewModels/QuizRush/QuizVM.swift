@@ -14,19 +14,23 @@ enum ViewState: Equatable {
   case failed(String)
 }
 
-@MainActor
-final class QuizViewModel: ObservableObject {
-  @Published var questions: [Question] = []
-  @Published var index = 0
-  @Published var score = 0
-  @Published var streak = 0
-  @Published var viewState: ViewState = .loading
-  @Published var isGameOverPresented = false
+@Observable
+final class QuizVM {
+  private var sessionService: GameSessionService
   
-  @Published var shuffledAnswers: [String] = []
+  var questions: [Question] = []
+  var index = 0
+  var score = 0
+  var streak = 0
+  var viewState: ViewState = .loading
+  var isGameOverPresented = false
   
-  @Published var selectedAnswer: String? = nil
-  @Published var isCorrectAnswer: Bool? = nil
+  var shuffledAnswers: [String] = []
+  
+  var selectedAnswer: String? = nil
+  var isCorrectAnswer: Bool? = nil
+  
+  let gameMode = GameMode.QuizRush
   
   var highScore: Int {
     GameStorage.quizRushHighScore
@@ -34,11 +38,14 @@ final class QuizViewModel: ObservableObject {
   
   private let quizService: QuizService
   
-  init(service: QuizService) {
+  init(sessionService: GameSessionService = .shared, service: QuizService)
+  {
+    self.sessionService = sessionService
     self.quizService = service
   }
   
-  func load() async {
+  func load() async
+  {
     viewState = .loading
     index = 0
     score = 0
@@ -56,7 +63,8 @@ final class QuizViewModel: ObservableObject {
     }
   }
   
-  func checkAnswer(_ answer: String) {
+  func checkAnswer(_ answer: String)
+  {
     guard index < questions.count else { return }
     
     let currentQuestion = questions[index]
@@ -80,11 +88,13 @@ final class QuizViewModel: ObservableObject {
     }
   }
   
-  private func loadAnswers() {
+  private func loadAnswers()
+  {
     shuffledAnswers = questions[index].answers.shuffled()
   }
   
-  private func moveToNext() {
+  private func moveToNext()
+  {
     selectedAnswer = nil
     isCorrectAnswer = nil
     
@@ -96,11 +106,26 @@ final class QuizViewModel: ObservableObject {
     }
   }
   
-  private func finishedGame() {
+  private func finishedGame()
+  {
     isGameOverPresented = true
+    saveSession()
     
     if score > GameStorage.quizRushHighScore {
       GameStorage.quizRushHighScore = score
     }
+  }
+  
+  private func saveSession()
+  {
+    let session = GameSession(
+      id: UUID(),
+      mode: gameMode,
+      score: score,
+      timestamp: Date(),
+      latitude: 0,
+      longitude: 0
+    )
+    sessionService.add(session)
   }
 }
