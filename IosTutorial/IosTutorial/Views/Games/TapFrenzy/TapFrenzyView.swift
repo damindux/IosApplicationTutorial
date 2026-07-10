@@ -43,7 +43,6 @@ struct TapFrenzyView: View {
       Spacer()
     }
     .background(.bg)
-    .toolbar(.hidden, for: .tabBar)
   }
   
   private var titleSection: some View {
