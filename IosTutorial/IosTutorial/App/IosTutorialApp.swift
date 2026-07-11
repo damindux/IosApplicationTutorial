@@ -10,7 +10,6 @@ import SwiftUI
 @main
 struct IosTutorialApp: App {
   @State private var selectedTab: TabItem = .home
-  @State private var isTabBarHidden = false
   
   var body: some Scene {
     WindowGroup {
@@ -28,15 +27,14 @@ struct IosTutorialApp: App {
           }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(\.tabBarHidden, $isTabBarHidden)
         
         VStack {
           Spacer()
           CustomTabBar(selectedTab: $selectedTab)
         }
-        .opacity(isTabBarHidden ? 0 : 1)
-        .offset(y: isTabBarHidden ? 100 : 0)
-        .animation(.easeInOut(duration: 0.2), value: isTabBarHidden)
+        .opacity(NavigationRouter.shared.isInGame ? 0 : 1)
+        .offset(y: NavigationRouter.shared.isInGame ? 100 : 0)
+        .animation(.easeInOut(duration: 0.2), value: NavigationRouter.shared.isInGame)
       }
       .ignoresSafeArea(.keyboard)
       .onAppear {

@@ -17,6 +17,11 @@ enum ViewState: Equatable {
 @Observable
 final class QuizVM {
   private var sessionService: GameSessionService
+  private let quizService: QuizService
+  
+  let category: QuizCategory
+  let difficulty: QuizDifficulty
+  let amount: Int
   
   var questions: [Question] = []
   var index = 0
@@ -26,7 +31,6 @@ final class QuizVM {
   var isGameOverPresented = false
   
   var shuffledAnswers: [String] = []
-  
   var selectedAnswer: String? = nil
   var isCorrectAnswer: Bool? = nil
   
@@ -36,12 +40,19 @@ final class QuizVM {
     GameStorage.quizRushHighScore
   }
   
-  private let quizService: QuizService
-  
-  init(sessionService: GameSessionService = .shared, service: QuizService)
+  init(
+    sessionService: GameSessionService = .shared,
+    service: QuizService,
+    category: QuizCategory = .general,
+    difficulty: QuizDifficulty = .medium,
+    amount: Int = 10
+  )
   {
     self.sessionService = sessionService
     self.quizService = service
+    self.category = category
+    self.difficulty = difficulty
+    self.amount = amount
   }
   
   func load() async
@@ -50,15 +61,22 @@ final class QuizVM {
     index = 0
     score = 0
     streak = 0
+    selectedAnswer = nil
+    isCorrectAnswer = nil
     
     do {
-      let quiz = try await quizService.fetchQuestions()
+      let quiz = try await quizService.fetchQuestions(
+        category: category,
+        difficulty: difficulty,
+        amount: amount
+      )
       questions = quiz.results
       
       shuffledAnswers = questions.first?.answers.shuffled() ?? []
       
       viewState = .loaded
-    } catch {
+    }
+    catch {
       viewState = .failed(error.localizedDescription)
     }
   }

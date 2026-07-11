@@ -54,7 +54,7 @@ struct MainMenuView: View {
                 icon: "brain.head.profile",
                 color: quizRushColor,
                 isPresented: $isShowingQuizRush,
-                destination: QuizView()
+                destination: QuizSetupView()
               )
             }
             .padding(.horizontal, 24)
@@ -68,16 +68,14 @@ struct MainMenuView: View {
         LightItUpView()
       }
       .navigationDestination(isPresented: $isShowingQuizRush) {
-        QuizView()
+        QuizSetupView()
       }
     }
   }
   
   private var titleSection: some View {
     VStack(spacing: 8) {
-      // Pixel art style title with shadow
       ZStack {
-        // Shadow offset
         Text("PLAY HUB")
           .font(Font.custom("Pixelify Sans", size: 52))
           .foregroundStyle(.border)

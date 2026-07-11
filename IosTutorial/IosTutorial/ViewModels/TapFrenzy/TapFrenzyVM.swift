@@ -39,7 +39,7 @@ class TapFrenzyVM {
   
   func startGame()
   {
-    guard timeRemaining == 10 && score == 0 && !gameOver else { return }
+    guard timerCancellable == nil else { return }
     startTimers()
   }
   

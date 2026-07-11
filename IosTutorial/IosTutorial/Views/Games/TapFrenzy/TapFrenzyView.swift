@@ -10,18 +10,18 @@ import Combine
 
 struct TapFrenzyView: View {
   @State private var viewModel = TapFrenzyVM()
-  @Environment(\.tabBarHidden) private var tabBarHidden
   
   var body: some View {
     gameView
       .ignoresSafeArea(.container, edges: .bottom)
       .onAppear {
-        tabBarHidden.wrappedValue = true
+        NavigationRouter.shared.enterGame()
+        viewModel.resetGame()
         viewModel.startGame()
       }
       .onDisappear {
-        tabBarHidden.wrappedValue = false
         viewModel.stopGame()
+        NavigationRouter.shared.exitGame()
       }
       .fullScreenCover(isPresented: $viewModel.showGameOver) {
         GameOverView(

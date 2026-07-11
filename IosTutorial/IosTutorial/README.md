@@ -2,20 +2,22 @@
 
 ## Common
 
-- [ ] UI overhaul
+- [x] UI overhaul
 - [ ] Add starting pages for every game
-- [ ] Location storage
+ - [ ] Tap Frenzy
+ - [ ] Light it up
+ - [x] Quiz Rush
+- [x] Location storage
  - [x] Tap Frenzy
- - [ ] Light It Up
- - [ ] Quiz Rush
+ - [x] Light It Up
+ - [x] Quiz Rush
 - [ ] Daily challenge
 - [x] Abstract away notifications to a service
 - [x] Daily reminder
 - [x] Stats page
-- [ ] Recent sessions in stat page
 - [x] Settings page
 - [x] Share option
-- [ ] Break previous games in to more files
+- [x] Break previous games in to more files
 - [ ] Handle all TODO comments
 
 ## Light It Up
@@ -30,3 +32,9 @@
 
 
 Deep Maze Palette
+
+## Bugs
+
+- [ ] Stat bar becomes black when go into games
+- [ ] Light it up hearts are black
+- [ ] Recent sessions in stat page

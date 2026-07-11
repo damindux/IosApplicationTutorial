@@ -9,7 +9,6 @@ import SwiftUI
 
 struct QuizView: View {
   @State var viewModel = QuizVM(service: QuizService())
-  @Environment(\.tabBarHidden) private var tabBarHidden
   
   var body: some View {
     ZStack {
@@ -28,10 +27,10 @@ struct QuizView: View {
       }
     }
     .onAppear {
-      tabBarHidden.wrappedValue = true
+      NavigationRouter.shared.enterGame()
     }
     .onDisappear {
-      tabBarHidden.wrappedValue = false
+      NavigationRouter.shared.exitGame()
     }
     .fullScreenCover(isPresented: $viewModel.isGameOverPresented) {
       GameOverView(
@@ -239,6 +238,14 @@ struct QuizView: View {
           Rectangle()
             .fill(.sectionBg)
             .frame(height: 12)
+            .overlay(
+              Rectangle()
+                .stroke(.on.opacity(0.5), lineWidth: 1)
+            )
+          
+          Rectangle()
+            .fill(.on)
+            .frame(width: geo.size.width * progress, height: 12)
             .overlay(
               Rectangle()
                 .stroke(.on.opacity(0.5), lineWidth: 1)

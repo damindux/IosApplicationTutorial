@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LightItUpView: View {
   @State private var viewModel = LightItUpVM()
-  @Environment(\.tabBarHidden) private var tabBarHidden
   
   private var gridItems: [GridItem] {
     Array(repeating: GridItem(.flexible(), spacing: 8), count: viewModel.level.columnCount)
@@ -19,11 +18,11 @@ struct LightItUpView: View {
     gameView
       .ignoresSafeArea(.container, edges: .bottom)
       .onAppear {
-        tabBarHidden.wrappedValue = true
+        NavigationRouter.shared.enterGame()
         viewModel.startGame()
       }
       .onDisappear {
-        tabBarHidden.wrappedValue = false
+        NavigationRouter.shared.exitGame()
         viewModel.stopGame()
       }
       .fullScreenCover(isPresented: $viewModel.showGameOver) {
