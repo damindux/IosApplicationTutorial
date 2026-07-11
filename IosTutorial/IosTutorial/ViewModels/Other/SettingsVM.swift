@@ -7,16 +7,19 @@
 
 import SwiftUI
 import UserNotifications
+import LocalAuthentication
 
 @Observable
 class SettingsVM {
   private let notificationService: NotificationServiceProtocol
   private let defaults = UserDefaults.standard
+  private let authService = AuthenticationService()
   
   var dailyReminderEnabled = false
   var dailyReminderTime = Date()
   var dailyChallengeEnabled = false
   var notificationPermissionStatus: UNAuthorizationStatus = .notDetermined
+  var showAuthenticationFailedAlert = false
   
   private enum Keys {
     static let dailyReminderEnabled = "dailyReminderEnabled"
@@ -119,11 +122,29 @@ class SettingsVM {
   
   func resetGameData()
   {
-    GameStorage.resetAll()
-    dailyReminderEnabled = false
-    dailyChallengeEnabled = false
-    
-    notificationService.cancelDailyReminder()
-    saveSettings()
+    Task {
+      do {
+        try await authService.authenticate()
+        
+        await MainActor.run {
+          GameStorage.resetAll()
+          dailyReminderEnabled = false
+          dailyChallengeEnabled = false
+          
+          notificationService.cancelDailyReminder()
+          saveSettings()
+        }
+      }
+      catch let error as LAError {
+        await MainActor.run {
+          switch error.code {
+          case .userCancel, .systemCancel, .appCancel:
+            break
+          default:
+            showAuthenticationFailedAlert = true
+          }
+        }
+      }
+    }
   }
 }

@@ -1,4 +1,4 @@
-#  IOS tutorial
+#  Play Hub
 
 ## Common
 
@@ -18,7 +18,7 @@
 - [x] Settings page
 - [x] Share option
 - [x] Break previous games in to more files
-- [ ] Handle all TODO comments
+- [x] Handle all TODO comments
 
 ## Light It Up
 
@@ -28,7 +28,7 @@
 
 ## Quiz Rush
 
-- [ ] Add a page to change difficulties and categories
+- [x] Add a page to change difficulties and categories
 
 
 Deep Maze Palette
@@ -37,4 +37,4 @@ Deep Maze Palette
 
 - [ ] Stat bar becomes black when go into games
 - [ ] Light it up hearts are black
-- [ ] Recent sessions in stat page
+- [x] Recent sessions in stat page

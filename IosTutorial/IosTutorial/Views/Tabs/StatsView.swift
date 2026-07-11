@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct StatsView: View {
+  @State private var sessions: [GameSession] = []
+  private let gameService = GameSessionService.shared
+  
   private var chartData: [(game: String, score: Int, color: Color)] {
     [
       ("Tap", GameStorage.tapFrenzyHighScore, .on),
@@ -58,14 +61,28 @@ struct StatsView: View {
                 color: .title,
                 label: "Best Score"
               )
+              
+              recentSessionsSection
             }
             .padding(.horizontal, 24)
+            .padding(.bottom, 40)
           }
         }
       }
       .navigationTitle("")
       .toolbar(.hidden, for: .navigationBar)
+      .onAppear {
+        loadSessions()
+      }
+      .onReceive(NotificationCenter.default.publisher(for: .gameSessionAdded)) { _ in
+        loadSessions()
+      }
     }
+  }
+  
+  private func loadSessions()
+  {
+    sessions = gameService.load()
   }
   
   private var titleSection: some View {
@@ -254,6 +271,118 @@ struct StatsView: View {
         .fill(.border.opacity(0.5))
         .offset(x: 4, y: 4)
     )
+  }
+  
+  private var recentSessionsSection: some View {
+    VStack(alignment: .leading, spacing: 16) {
+      HStack {
+        Text("RECENT")
+          .font(Font.custom("Pixelify Sans", size: 16))
+          .foregroundStyle(.title.opacity(0.7))
+        
+        Spacer()
+        
+        Text("\(sessions.count) games")
+          .font(Font.custom("Pixelify Sans", size: 12))
+          .foregroundStyle(.title.opacity(0.5))
+      }
+      
+      if sessions.isEmpty {
+        HStack {
+          Spacer()
+          VStack(spacing: 12) {
+            Image(systemName: "clock.arrow.circlepath")
+              .font(.system(size: 32))
+              .foregroundStyle(.title.opacity(0.3))
+            
+            Text("No games yet")
+              .font(Font.custom("Pixelify Sans", size: 16))
+              .foregroundStyle(.title.opacity(0.5))
+          }
+          .padding(.vertical, 40)
+          Spacer()
+        }
+        .background(.sectionBg.opacity(0.5))
+        .overlay(
+          Rectangle()
+            .stroke(.border.opacity(0.3), lineWidth: 2)
+        )
+      }
+      else {
+        VStack(spacing: 8) {
+          ForEach(sessions.prefix(10)) { session in
+            sessionRow(session)
+          }
+        }
+      }
+    }
+  }
+  
+  private func sessionRow(_ session: GameSession) -> some View
+  {
+    HStack(spacing: 12) {
+      ZStack {
+        Rectangle()
+          .fill(sessionColor(session.mode).opacity(0.2))
+          .frame(width: 40, height: 40)
+          .overlay(
+            Rectangle()
+              .stroke(sessionColor(session.mode).opacity(0.5), lineWidth: 2)
+          )
+        
+        Image(systemName: sessionIcon(session.mode))
+          .font(.system(size: 16, weight: .bold))
+          .foregroundStyle(sessionColor(session.mode))
+      }
+      
+      VStack(alignment: .leading, spacing: 2) {
+        Text(session.mode.rawValue)
+          .font(Font.custom("Pixelify Sans", size: 16))
+          .foregroundStyle(.text)
+        
+        Text(formattedDate(session.timestamp))
+          .font(Font.custom("Pixelify Sans", size: 11))
+          .foregroundStyle(.title.opacity(0.5))
+      }
+      
+      Spacer()
+      
+      Text("\(session.score)")
+        .font(Font.custom("Pixelify Sans", size: 24))
+        .foregroundStyle(sessionColor(session.mode))
+        .monospacedDigit()
+    }
+    .padding(12)
+    .background(.sectionBg.opacity(0.5))
+    .overlay(
+      Rectangle()
+        .stroke(.border.opacity(0.3), lineWidth: 1)
+    )
+  }
+  
+  private func sessionColor(_ mode: GameMode) -> Color
+  {
+    switch mode {
+    case .TapFrenzy: return .on
+    case .LightItUp: return .secondaryAccent
+    case .QuizRush: return .title
+    }
+  }
+  
+  private func sessionIcon(_ mode: GameMode) -> String
+  {
+    switch mode {
+    case .TapFrenzy: return "hand.tap.fill"
+    case .LightItUp: return "lightbulb.fill"
+    case .QuizRush: return "brain.head.profile"
+    }
+  }
+  
+  private func formattedDate(_ date: Date) -> String
+  {
+    let formatter = RelativeDateTimeFormatter()
+    formatter.unitsStyle = .short
+    return formatter.localizedString(for: date, relativeTo: Date())
   }
   
   private func summaryBox(value: Int, label: String, color: Color) -> some View

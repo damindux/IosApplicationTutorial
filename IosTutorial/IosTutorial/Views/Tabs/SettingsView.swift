@@ -15,7 +15,6 @@ struct SettingsView: View {
     NavigationStack {
       ScrollView {
         VStack(spacing: 24) {
-          // Custom nav title
           Text("Settings")
             .font(Font.custom("Pixelify Sans", size: 38))
             .foregroundStyle(.text)
@@ -89,6 +88,17 @@ struct SettingsView: View {
       } message: {
         Text("This will erase all your scores and progress. This cannot be undone.")
           .font(Font.custom("Pixelify Sans", size: 16))
+      }
+      .alert(
+        "Authentication Failed",
+        isPresented: Binding(
+          get: { viewModel.showAuthenticationFailedAlert },
+          set: { viewModel.showAuthenticationFailedAlert = $0 }
+        )
+      ) {
+        Button("OK", role: .cancel) { }
+      } message: {
+        Text("Unable to verify your identity. Game data was not reset.")
       }
     }
   }
