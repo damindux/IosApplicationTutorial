@@ -68,6 +68,7 @@ struct StatsView: View {
             .padding(.bottom, 40)
           }
         }
+        .padding(.bottom, 84)
       }
       .navigationTitle("")
       .toolbar(.hidden, for: .navigationBar)

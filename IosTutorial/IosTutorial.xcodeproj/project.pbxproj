@@ -26,6 +26,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		D7BFB48F300A5A9500FA4424 /* images */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = images;
+			sourceTree = "<group>";
+		};
 		D7F708EA2FD4312B00B65663 /* IosTutorial */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -52,6 +57,7 @@
 			children = (
 				D7F708EA2FD4312B00B65663 /* IosTutorial */,
 				D7FF1B3C300219980061C14C /* README.md */,
+				D7BFB48F300A5A9500FA4424 /* images */,
 				D7F708E92FD4312B00B65663 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -80,6 +86,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				D7BFB48F300A5A9500FA4424 /* images */,
 				D7F708EA2FD4312B00B65663 /* IosTutorial */,
 			);
 			name = IosTutorial;
