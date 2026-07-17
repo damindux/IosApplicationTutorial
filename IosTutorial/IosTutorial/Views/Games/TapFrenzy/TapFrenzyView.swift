@@ -10,6 +10,7 @@ import Combine
 
 struct TapFrenzyView: View {
   @State private var viewModel = TapFrenzyVM()
+  @Environment(\.dismiss) private var dismiss
   
   var body: some View {
     gameView
@@ -27,10 +28,15 @@ struct TapFrenzyView: View {
         GameOverView(
           score: viewModel.score,
           highScore: viewModel.highScore,
-          gameMode: viewModel.gameMode
-        ) {
-          viewModel.resetGame()
-        }
+          gameMode: viewModel.gameMode,
+          onPlayAgain: {
+            viewModel.resetGame()
+            viewModel.startGame()
+          },
+          onMainMenu: {
+            dismiss()
+          }
+        )
       }
   }
   

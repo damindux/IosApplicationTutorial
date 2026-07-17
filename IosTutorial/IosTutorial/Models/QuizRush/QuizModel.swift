@@ -27,7 +27,7 @@ struct Question: Codable {
   }
 }
 
-enum QuizCategory: Int, CaseIterable {
+enum QuizCategory: Int, CaseIterable, Codable {
   case general = 9
   case books = 10
   case film = 11
@@ -61,7 +61,7 @@ enum QuizCategory: Int, CaseIterable {
   }
 }
 
-enum QuizDifficulty: String, CaseIterable {
+enum QuizDifficulty: String, CaseIterable, Codable {
   case easy = "easy"
   case medium = "medium"
   case hard = "hard"

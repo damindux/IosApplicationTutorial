@@ -9,6 +9,7 @@ import SwiftUI
 
 struct QuizView: View {
   @State var viewModel = QuizVM(service: QuizService())
+  @Environment(\.dismiss) private var dismiss
   
   var body: some View {
     ZStack {
@@ -38,10 +39,13 @@ struct QuizView: View {
         highScore: viewModel.highScore,
         gameMode: .QuizRush,
         onPlayAgain: {
+          viewModel.isGameOverPresented = false
           Task {
-            viewModel.isGameOverPresented = false
             await viewModel.load()
           }
+        },
+        onMainMenu: {
+          dismiss()
         }
       )
     }

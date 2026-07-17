@@ -132,6 +132,8 @@ final class QuizVM {
     if score > GameStorage.quizRushHighScore {
       GameStorage.quizRushHighScore = score
     }
+    
+    DailyChallengeService.shared.markCompleted(score: score, for: .QuizRush)
   }
   
   private func saveSession()

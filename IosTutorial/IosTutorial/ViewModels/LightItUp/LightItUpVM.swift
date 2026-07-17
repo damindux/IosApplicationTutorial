@@ -114,6 +114,8 @@ final class LightItUpVM {
     saveSession()
     showGameOver = true
     lightTask?.cancel()
+    
+    DailyChallengeService.shared.markCompleted(score: score, for: .LightItUp)
   }
   
   private func setHighScore()

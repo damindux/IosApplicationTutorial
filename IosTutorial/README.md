@@ -11,7 +11,7 @@
  - [x] Tap Frenzy
  - [x] Light It Up
  - [x] Quiz Rush
-- [ ] Daily challenge
+- [x] Daily challenge
 - [x] Abstract away notifications to a service
 - [x] Daily reminder
 - [x] Stats page

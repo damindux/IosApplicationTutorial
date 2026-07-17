@@ -128,6 +128,9 @@ class TapFrenzyVM {
     stopTimers()
     setHighScore()
     saveSession()
+    
+    DailyChallengeService.shared.markCompleted(score: score, for: .TapFrenzy)
+    
     showGameOver = true
   }
   

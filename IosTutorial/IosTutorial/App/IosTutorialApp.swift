@@ -40,6 +40,7 @@ struct IosTutorialApp: App {
       .onAppear {
         LocationService.shared.requestPermission()
       }
+      .preferredColorScheme(.light)
     }
   }
 }
