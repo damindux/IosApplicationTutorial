@@ -6,13 +6,8 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		D7FF1B5D300219980061C14C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D7FF1B3C300219980061C14C /* README.md */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		D7F708E82FD4312B00B65663 /* IosTutorial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IosTutorial.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D7FF1B3C300219980061C14C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -26,11 +21,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D7BFB48F300A5A9500FA4424 /* images */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = images;
-			sourceTree = "<group>";
-		};
 		D7F708EA2FD4312B00B65663 /* IosTutorial */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -56,8 +46,6 @@
 			isa = PBXGroup;
 			children = (
 				D7F708EA2FD4312B00B65663 /* IosTutorial */,
-				D7FF1B3C300219980061C14C /* README.md */,
-				D7BFB48F300A5A9500FA4424 /* images */,
 				D7F708E92FD4312B00B65663 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,7 +74,6 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D7BFB48F300A5A9500FA4424 /* images */,
 				D7F708EA2FD4312B00B65663 /* IosTutorial */,
 			);
 			name = IosTutorial;
@@ -135,7 +122,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7FF1B5D300219980061C14C /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
