@@ -15,6 +15,7 @@ push notification reminders.
 - [Features](#features)
 - [Games](#games)
 - [Known Limitations](#known-limitations)
+- [Reflection](#reflection)
 
 ---
 
