@@ -4,10 +4,7 @@ A pixel-art-themed iOS mini-game collection built with SwiftUI. Play Hub bundles
 games under one roof, with cross-game stats tracking, daily challenges, location tagging, and
 push notification reminders.
 
-<img src="images/1.png" width=220>
-<img src="images/2.png" width=220>
-<img src="images/3.png" width=220>
-<img src="images/4.png" width=220>
+<img src="images/1.png" width=220> <img src="images/2.png" width=220> <img src="images/3.png" width=220> <img src="images/4.png" width=220>
 
 ---
 
@@ -212,3 +209,9 @@ daily challenge parameters when a Quiz Rush challenge is active.
   lost if the app is deleted or the device is changed.
 - **Light-mode only** — The app is pinned to `.preferredColorScheme(.light)` and does not
   honour the system dark mode setting.
+
+## Reflection
+
+Building this project finally made the MVVM pattern make sense in a way that theory alone couldn't. Keeping timer logic and game state inside the ViewModels instead of letting it leak into the view made debugging far more straightforward when issues came up.
+The most valuable takeaway was the service layer. By abstracting UserDefaults, CoreLocation, and UNUserNotificationCenter behind their own dedicated classes, the ViewModels could stay focused on what needed to happen rather than getting bogged down in implementation details.
+If I were to revisit one thing, it would be the LightItUp difficulty scaling. The fixed time-window thresholds get the job done, but they come across as rigid and somewhat random. A dynamic difficulty system that actually adapts to how accurately the player is performing would create a much more satisfying and fair experience
