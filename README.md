@@ -213,6 +213,14 @@ daily challenge parameters when a Quiz Rush challenge is active.
 
 ## Reflection
 
-Building this project finally made the MVVM pattern make sense in a way that theory alone couldn't. Keeping timer logic and game state inside the ViewModels instead of letting it leak into the view made debugging far more straightforward when issues came up.
-The most valuable takeaway was the service layer. By abstracting UserDefaults, CoreLocation, and UNUserNotificationCenter behind their own dedicated classes, the ViewModels could stay focused on what needed to happen rather than getting bogged down in implementation details.
-If I were to revisit one thing, it would be the LightItUp difficulty scaling. The fixed time-window thresholds get the job done, but they come across as rigid and somewhat random. A dynamic difficulty system that actually adapts to how accurately the player is performing would create a much more satisfying and fair experience
+I heard about Swift before but never had a reason to try it before this module. Since I got to use Swift and SwiftUI for the last few weeks, I have a few opinions about them.
+
+Swift is a beautiful language. It has a nice flow and really straight forward syntax. The only problem is that the support aside from the Apple ecosystem is not that great. SwiftUI is one of the best frameworks that I got to use. It has an amazing developer experience when comparing to something like Jetpack compose for Android. Both are pretty similar but the APIs provided by SwiftUI made things so much easier. For example, unlike integrating Google maps in Android, with MapKit in SwiftUI, I just have to write `Map()` and the map is right there on the screen.
+
+It's not always sunshine and rainbows, though. There were some huge pain points that I encountered in these past few weeks. All are related to Xcode. Xcode is, in my honest opinion, the worst development environment I ever used. It is absolutely trash. There were no tabs by default, I had to turn them on but they don't work like you'd expect. The builds sometimes work but sometimes they crash for no reason. Sometimes the errors shown in the IDE, stay there even after I've fixed them. The Vim mode, it barely qualifies as a Vim mode. If Xcode wasn't there, it would've been a no complaints experience.
+
+I have worked with MVVM architecture before but I never put much thought into understanding it. In the past few weeks I actually understood it. Specifically, abstracting away the data and logic to separate files from the view is actually kinda nice, even though it made me jump around a lot.
+
+Even though I had to spend most of the time in the Mac lab, it was kinda fun because I had to make games. Making games is always fun. I also like how the tutorial just built everything step by step every week showing us how to approach problems and what to look for instead of saying "just do it this way".
+
+All in all, the module was a great experience. Even though dealing with Xcode was easily the most frustrating part of the last few weeks, getting to build games made the lab time bearable (I had to travel from Matara. That added to the pain). The step-by-step tutorials were really helpful, and I'm really glad I finally had a reason to dive into Swift, SwiftUI, and proper MVVM architecture.​
